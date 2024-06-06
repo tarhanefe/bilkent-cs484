@@ -1,0 +1,665 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>CS484HW1</title><meta name="generator" content="MATLAB 9.13"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2024-03-12"><meta name="DC.source" content="CS484HW1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Q1</a></li><li><a href="#3">Q2</a></li><li><a href="#4">Q3</a></li><li><a href="#5">Q4</a></li><li><a href="#6">Q5</a></li><li><a href="#7">Q6</a></li><li><a href="#8">FUNCTIONS</a></li></ul></div><pre class="codeinput">clearvars
+close <span class="string">all</span>
+</pre><h2 id="2">Q1</h2><pre class="codeinput">src_img = imread(<span class="string">"HW1/Images/Q1.png"</span>);
+struct_et = [0 1 0;1 1 1;0 1 0];
+
+dilated_img = dilation(src_img,struct_et);
+eroded_img = erosion(src_img,struct_et);
+
+figure(1);
+subplot(1,2,1);
+imshow(src_img);
+title(<span class="string">"Original Binary Image"</span>)
+subplot(1,2,2);
+imshow(dilated_img);
+title(<span class="string">"Dilated Binary Image"</span>)
+
+figure(2);
+subplot(1,2,1);
+imshow(src_img);
+title(<span class="string">"Original Binary Image"</span>)
+subplot(1,2,2);
+imshow(eroded_img);
+title(<span class="string">"Eroded Binary Image"</span>)
+</pre><img vspace="5" hspace="5" src="CS484HW1_01.png" alt=""> <img vspace="5" hspace="5" src="CS484HW1_02.png" alt=""> <h2 id="3">Q2</h2><pre class="codeinput">clearvars
+src_img_a = imread(<span class="string">"HW1/Images/Q2_a.jpg"</span>);
+src_img_b = imread(<span class="string">"HW1/Images/Q2_b.png"</span>);
+
+src_img = src_img_a(:,:,1);
+vals_a = custom_histogram(src_img);
+
+src_img = src_img_b(:,:,1);
+vals_b = custom_histogram(src_img);
+</pre><img vspace="5" hspace="5" src="CS484HW1_03.png" alt=""> <img vspace="5" hspace="5" src="CS484HW1_04.png" alt=""> <h2 id="4">Q3</h2><pre class="codeinput">[out_img_a,vals_new_a] = customHistEq(src_img_a(:,:,1),vals_a);
+[out_img_b,vals_new_b] = customHistEq(src_img_b(:,:,1),vals_b);
+
+figure;
+subplot(2,2,1)
+imshow(src_img_a)
+title(<span class="string">"Original Image"</span>)
+subplot(2,2,2)
+imshow(out_img_a)
+title(<span class="string">"Histogram-Equalized Image"</span>)
+subplot(2,2,3)
+bar(vals_a)
+title(<span class="string">"Original Histogram"</span>)
+subplot(2,2,4)
+bar(vals_new_a)
+title(<span class="string">"Equalized Histogram"</span>)
+
+
+figure;
+subplot(2,2,1)
+imshow(src_img_b)
+title(<span class="string">"Original Image"</span>)
+subplot(2,2,2)
+imshow(out_img_b)
+title(<span class="string">"Histogram-Equalized Image"</span>)
+subplot(2,2,3)
+bar(vals_b)
+title(<span class="string">"Original Histogram"</span>)
+subplot(2,2,4)
+bar(vals_new_b)
+title(<span class="string">"Equalized Histogram"</span>)
+</pre><img vspace="5" hspace="5" src="CS484HW1_05.png" alt=""> <img vspace="5" hspace="5" src="CS484HW1_06.png" alt=""> <img vspace="5" hspace="5" src="CS484HW1_07.png" alt=""> <img vspace="5" hspace="5" src="CS484HW1_08.png" alt=""> <img vspace="5" hspace="5" src="CS484HW1_09.png" alt=""> <h2 id="5">Q4</h2><pre class="codeinput">clearvars
+src_img_a = imread(<span class="string">"HW1/Images/Q4_a.png"</span>);
+src_img_b = imread(<span class="string">"HW1/Images/Q4_b.png"</span>);
+
+out_img_a = otsu_threshold(src_img_a);
+out_img_b = otsu_threshold(src_img_b);
+
+figure();
+subplot(1,2,1);
+imshow(src_img_a);
+subplot(1,2,2);
+imshow(out_img_a);
+
+figure();
+subplot(1,2,1);
+imshow(src_img_b);
+subplot(1,2,2);
+imshow(out_img_b);
+</pre><img vspace="5" hspace="5" src="CS484HW1_10.png" alt=""> <img vspace="5" hspace="5" src="CS484HW1_11.png" alt=""> <img vspace="5" hspace="5" src="CS484HW1_12.png" alt=""> <img vspace="5" hspace="5" src="CS484HW1_13.png" alt=""> <h2 id="6">Q5</h2><pre class="codeinput">raw_img = imread(<span class="string">"HW/CS448 HW1/HW1/Images/Q5.png"</span>);
+thresh_img = otsu_threshold(raw_img);
+erose_img = erosion(thresh_img,ones(3));
+erose_img = erosion(erose_img,ones(3));
+erose_img = erosion(erose_img,ones(3));
+erose_img = erosion(erose_img,ones(3));
+
+
+figure();
+imshow(raw_img);
+figure();
+imshow(thresh_img);
+figure();
+imshow(erose_img);
+
+
+[labeledImage, numComponents] = connectedComponentAnalysisBFS(erose_img);
+</pre><img vspace="5" hspace="5" src="CS484HW1_14.png" alt=""> <img vspace="5" hspace="5" src="CS484HW1_15.png" alt=""> <img vspace="5" hspace="5" src="CS484HW1_16.png" alt=""> <img vspace="5" hspace="5" src="CS484HW1_17.png" alt=""> <h2 id="7">Q6</h2><h2 id="8">FUNCTIONS</h2><pre class="codeinput"><span class="comment">% Q1) Dilation Function</span>
+<span class="keyword">function</span> dilated_img = dilation(src_img,struct_et)
+src_img = src_img(:,:,1) &gt; 0;
+struct_et = struct_et == 1;
+dum = size(struct_et);
+ones_dum = [0 0];
+<span class="keyword">for</span> y = 1:dum(1)
+    <span class="keyword">for</span> x = 1:dum(2)
+        <span class="keyword">if</span> struct_et(y,x) &gt; 0
+            ones_dum = vertcat(ones_dum,[y x]);
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+ones_dum = ones_dum(2:end,:);
+
+size_img = size(src_img);
+size_struct = size(struct_et)-1;
+len_x = size_img(2) + size_struct(2);
+len_y = size_img(1) + size_struct(1);
+
+padded_img = uint8(zeros([len_y , len_x])) == 0;
+padded_img(size_struct(1)/2+1:end-size_struct(1)/2,size_struct(2)/2+1:end-size_struct(2)/2) = src_img;
+
+<span class="keyword">for</span> y = size_struct(1)/2+1:len_x-size_struct(1)/2
+    <span class="keyword">for</span> x = size_struct(2)/2+1:len_y-size_struct(2)/2
+        boolval = 0;
+        <span class="keyword">for</span> a = ones_dum'
+            ny = a(1); nx = a(2);
+            boolval = boolval | (struct_et(ny,nx) &amp; padded_img(y + (ny-(size_struct(1)/2+1)) , x + nx-(size_struct(2)/2 +1)));
+        <span class="keyword">end</span>
+        dilated_img(y-size_struct(1)/2,x-size_struct(2)/2) = boolval;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+dilated_img = uint8(dilated_img*255);
+<span class="keyword">end</span>
+
+
+<span class="comment">% Q1) Erosion Function</span>
+
+<span class="keyword">function</span> eroded_img = erosion(src_img,struct_et)
+src_img = src_img(:,:,1) &gt; 0;
+struct_et = struct_et == 1;
+dum = size(struct_et);
+ones_dum = [0 0];
+<span class="keyword">for</span> y = 1:dum(1)
+    <span class="keyword">for</span> x = 1:dum(2)
+        <span class="keyword">if</span> struct_et(y,x) == 1
+            ones_dum = vertcat(ones_dum,[y x]);
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+ones_dum = ones_dum(2:end,:);
+
+size_img = size(src_img);
+size_struct = size(struct_et)-1;
+len_x = size_img(2) + size_struct(2);
+len_y = size_img(1) + size_struct(1);
+
+padded_img = uint8(zeros([len_y , len_x])) == 0;
+padded_img(size_struct(1)/2+1:end-size_struct(1)/2,size_struct(2)/2+1:end-size_struct(2)/2) = src_img;
+
+<span class="keyword">for</span> y = size_struct(1)/2+1:len_y-size_struct(1)/2
+    <span class="keyword">for</span> x = size_struct(2)/2+1:len_x-size_struct(2)/2
+        boolval = 1;
+        <span class="keyword">for</span> a = ones_dum'
+            ny = a(1); nx = a(2);
+            boolval = boolval &amp; (struct_et(ny,nx) &amp; padded_img(y + (ny-(size_struct(1)/2+1)) , x + nx-(size_struct(2)/2 +1)));
+        <span class="keyword">end</span>
+        eroded_img(y-size_struct(1)/2,x-size_struct(2)/2) = boolval;
+    <span class="keyword">end</span>
+eroded_img = eroded_img * 255;
+<span class="keyword">end</span>
+
+<span class="keyword">end</span>
+
+
+<span class="comment">% Q2) Histogram Function</span>
+
+<span class="keyword">function</span> vals = custom_histogram(src_img)
+src_img = reshape(src_img.',1,[]);
+vals = zeros([1 256]);
+<span class="keyword">for</span> i = 0:255
+    vals(i+1) = sum(src_img == i);
+<span class="keyword">end</span>
+
+figure;
+bar(vals);
+title(<span class="string">"Greyscale Image Histogram"</span>)
+
+<span class="keyword">end</span>
+
+<span class="comment">% Q3) Equalizer Function</span>
+<span class="keyword">function</span> [img_eq,vals_new] = customHistEq(img, vals)
+    cdf = cumsum(vals) / sum(vals);
+    cdf_norm = round(cdf * 255);
+    img_eq = zeros(size(img), <span class="string">'uint8'</span>);
+    <span class="keyword">for</span> i = 1:256
+        img_eq(img == i-1) = cdf_norm(i);
+    <span class="keyword">end</span>
+    vals_new = custom_histogram(img_eq);
+<span class="keyword">end</span>
+
+<span class="comment">% Q4) OTSU Thresholding</span>
+
+<span class="keyword">function</span> binary_image = otsu_threshold(source_image)
+    counts = custom_histogram(source_image);
+    total = sum(counts);
+    sum0 = 0;
+    w0 = 0;
+    maximum = 0.0;
+    sum1 = dot((0:255), counts);
+
+    <span class="keyword">for</span> px = 1:256
+        w0 = w0 + counts(px);
+        <span class="keyword">if</span> w0 == 0
+            <span class="keyword">continue</span>;
+        <span class="keyword">end</span>
+        w1 = total - w0;
+        <span class="keyword">if</span> w1 == 0
+            <span class="keyword">break</span>;
+        <span class="keyword">end</span>
+
+        sum0 = sum0 +  (px-1) * counts(px);
+        m0 = sum0 / w0;
+        m1 = (sum1 - sum0) / w1;
+        intervar = w0 * w1 * (m0 - m1)^2;
+        <span class="keyword">if</span> ( intervar &gt; maximum )
+            maximum = intervar;
+            level = px;
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+
+    binary_image = source_image &gt; level;
+
+<span class="keyword">end</span>
+
+<span class="comment">% Q5)</span>
+
+<span class="keyword">function</span> [labeledImage, numComponents] = connectedComponentAnalysisBFS(binaryImage)
+    <span class="comment">% Ensure the input image is binary.</span>
+    binaryImage = binaryImage &gt; 0;
+
+    <span class="comment">% Initialize the labeled image and component count.</span>
+    labeledImage = zeros(size(binaryImage));
+    numComponents = 0;
+
+    <span class="comment">% Get the dimensions of the image.</span>
+    [rows, cols] = size(binaryImage);
+
+    <span class="comment">% Directions for 4-connectivity: up, down, left, right.</span>
+    directions = [-1, 0; 1, 0; 0, -1; 0, 1];
+
+    <span class="comment">% Function for the breadth-first search.</span>
+    <span class="keyword">function</span> bfs(startRow, startCol, label)
+        <span class="comment">% Initialize a queue with the starting pixel.</span>
+        queue = [startRow, startCol];
+
+        <span class="keyword">while</span> ~isempty(queue)
+            <span class="comment">% Pop the first element from the queue.</span>
+            pixel = queue(1, :);
+            queue(1, :) = [];
+
+            <span class="keyword">for</span> i = 1:4
+                newRow = pixel(1) + directions(i, 1);
+                newCol = pixel(2) + directions(i, 2);
+
+                <span class="comment">% Check bounds and if the pixel is part of the component and not yet labeled.</span>
+                <span class="keyword">if</span> newRow &gt; 0 &amp;&amp; newRow &lt;= rows &amp;&amp; newCol &gt; 0 &amp;&amp; newCol &lt;= cols <span class="keyword">...</span>
+                        &amp;&amp; binaryImage(newRow, newCol) == 1 &amp;&amp; labeledImage(newRow, newCol) == 0
+                    labeledImage(newRow, newCol) = label;
+                    queue(end+1, :) = [newRow, newCol]; <span class="comment">% Enqueue</span>
+                <span class="keyword">end</span>
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+
+    <span class="comment">% Iterate through each pixel in the image.</span>
+    <span class="keyword">for</span> r = 1:rows
+        <span class="keyword">for</span> c = 1:cols
+            <span class="comment">% If the pixel is a foreground pixel and not yet labeled, perform BFS.</span>
+            <span class="keyword">if</span> binaryImage(r, c) == 1 &amp;&amp; labeledImage(r, c) == 0
+                numComponents = numComponents + 1; <span class="comment">% Found a new component.</span>
+                labeledImage(r, c) = numComponents;
+                bfs(r, c, numComponents);
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2022b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+clearvars
+close all
+
+%% Q1 
+src_img = imread("HW1/Images/Q1.png");
+struct_et = [0 1 0;1 1 1;0 1 0];
+
+dilated_img = dilation(src_img,struct_et);
+eroded_img = erosion(src_img,struct_et);
+
+figure(1);
+subplot(1,2,1);
+imshow(src_img);
+title("Original Binary Image")
+subplot(1,2,2);
+imshow(dilated_img);
+title("Dilated Binary Image")
+
+figure(2);
+subplot(1,2,1);
+imshow(src_img);
+title("Original Binary Image")
+subplot(1,2,2);
+imshow(eroded_img);
+title("Eroded Binary Image")
+
+%% Q2
+clearvars
+src_img_a = imread("HW1/Images/Q2_a.jpg");
+src_img_b = imread("HW1/Images/Q2_b.png");
+
+src_img = src_img_a(:,:,1);
+vals_a = custom_histogram(src_img);
+
+src_img = src_img_b(:,:,1);
+vals_b = custom_histogram(src_img);
+
+%% Q3
+
+[out_img_a,vals_new_a] = customHistEq(src_img_a(:,:,1),vals_a);
+[out_img_b,vals_new_b] = customHistEq(src_img_b(:,:,1),vals_b);
+
+figure;
+subplot(2,2,1)
+imshow(src_img_a)
+title("Original Image")
+subplot(2,2,2)
+imshow(out_img_a)
+title("Histogram-Equalized Image")
+subplot(2,2,3)
+bar(vals_a)
+title("Original Histogram")
+subplot(2,2,4)
+bar(vals_new_a)
+title("Equalized Histogram")
+
+
+figure;
+subplot(2,2,1)
+imshow(src_img_b)
+title("Original Image")
+subplot(2,2,2)
+imshow(out_img_b)
+title("Histogram-Equalized Image")
+subplot(2,2,3)
+bar(vals_b)
+title("Original Histogram")
+subplot(2,2,4)
+bar(vals_new_b)
+title("Equalized Histogram")
+
+%% Q4
+clearvars
+src_img_a = imread("HW1/Images/Q4_a.png");
+src_img_b = imread("HW1/Images/Q4_b.png");
+
+out_img_a = otsu_threshold(src_img_a);
+out_img_b = otsu_threshold(src_img_b);
+
+figure();
+subplot(1,2,1);
+imshow(src_img_a);
+subplot(1,2,2);
+imshow(out_img_a);
+
+figure();
+subplot(1,2,1);
+imshow(src_img_b);
+subplot(1,2,2);
+imshow(out_img_b);
+
+%% Q5
+raw_img = imread("HW/CS448 HW1/HW1/Images/Q5.png");
+thresh_img = otsu_threshold(raw_img);
+erose_img = erosion(thresh_img,ones(3));
+erose_img = erosion(erose_img,ones(3));
+erose_img = erosion(erose_img,ones(3));
+erose_img = erosion(erose_img,ones(3));
+
+
+figure();
+imshow(raw_img);
+figure();
+imshow(thresh_img);
+figure();
+imshow(erose_img);
+
+
+[labeledImage, numComponents] = connectedComponentAnalysisBFS(erose_img);
+%% Q6 
+
+
+%% FUNCTIONS         
+
+% Q1) Dilation Function
+function dilated_img = dilation(src_img,struct_et)
+src_img = src_img(:,:,1) > 0;
+struct_et = struct_et == 1;
+dum = size(struct_et);
+ones_dum = [0 0];
+for y = 1:dum(1)
+    for x = 1:dum(2)
+        if struct_et(y,x) > 0
+            ones_dum = vertcat(ones_dum,[y x]);
+        end
+    end
+end
+ones_dum = ones_dum(2:end,:);
+
+size_img = size(src_img);
+size_struct = size(struct_et)-1;
+len_x = size_img(2) + size_struct(2);
+len_y = size_img(1) + size_struct(1);
+
+padded_img = uint8(zeros([len_y , len_x])) == 0;
+padded_img(size_struct(1)/2+1:end-size_struct(1)/2,size_struct(2)/2+1:end-size_struct(2)/2) = src_img;
+
+for y = size_struct(1)/2+1:len_x-size_struct(1)/2
+    for x = size_struct(2)/2+1:len_y-size_struct(2)/2
+        boolval = 0;
+        for a = ones_dum'
+            ny = a(1); nx = a(2);
+            boolval = boolval | (struct_et(ny,nx) & padded_img(y + (ny-(size_struct(1)/2+1)) , x + nx-(size_struct(2)/2 +1)));
+        end
+        dilated_img(y-size_struct(1)/2,x-size_struct(2)/2) = boolval;
+    end
+end
+dilated_img = uint8(dilated_img*255);
+end
+
+
+% Q1) Erosion Function 
+
+function eroded_img = erosion(src_img,struct_et)
+src_img = src_img(:,:,1) > 0;
+struct_et = struct_et == 1;
+dum = size(struct_et);
+ones_dum = [0 0];
+for y = 1:dum(1)
+    for x = 1:dum(2)
+        if struct_et(y,x) == 1
+            ones_dum = vertcat(ones_dum,[y x]);
+        end
+    end
+end
+ones_dum = ones_dum(2:end,:);
+
+size_img = size(src_img);
+size_struct = size(struct_et)-1;
+len_x = size_img(2) + size_struct(2);
+len_y = size_img(1) + size_struct(1);
+
+padded_img = uint8(zeros([len_y , len_x])) == 0;
+padded_img(size_struct(1)/2+1:end-size_struct(1)/2,size_struct(2)/2+1:end-size_struct(2)/2) = src_img;
+
+for y = size_struct(1)/2+1:len_y-size_struct(1)/2
+    for x = size_struct(2)/2+1:len_x-size_struct(2)/2
+        boolval = 1;
+        for a = ones_dum'
+            ny = a(1); nx = a(2);
+            boolval = boolval & (struct_et(ny,nx) & padded_img(y + (ny-(size_struct(1)/2+1)) , x + nx-(size_struct(2)/2 +1)));
+        end
+        eroded_img(y-size_struct(1)/2,x-size_struct(2)/2) = boolval;
+    end
+eroded_img = eroded_img * 255;
+end
+
+end
+
+
+% Q2) Histogram Function
+
+function vals = custom_histogram(src_img)
+src_img = reshape(src_img.',1,[]);
+vals = zeros([1 256]);
+for i = 0:255
+    vals(i+1) = sum(src_img == i);
+end
+
+figure;
+bar(vals);
+title("Greyscale Image Histogram")
+
+end
+
+% Q3) Equalizer Function
+function [img_eq,vals_new] = customHistEq(img, vals)
+    cdf = cumsum(vals) / sum(vals);
+    cdf_norm = round(cdf * 255);
+    img_eq = zeros(size(img), 'uint8');
+    for i = 1:256
+        img_eq(img == i-1) = cdf_norm(i);
+    end
+    vals_new = custom_histogram(img_eq);
+end
+
+% Q4) OTSU Thresholding
+
+function binary_image = otsu_threshold(source_image)
+    counts = custom_histogram(source_image);
+    total = sum(counts);
+    sum0 = 0;
+    w0 = 0;
+    maximum = 0.0;
+    sum1 = dot((0:255), counts);
+   
+    for px = 1:256
+        w0 = w0 + counts(px);
+        if w0 == 0
+            continue;
+        end
+        w1 = total - w0;
+        if w1 == 0
+            break;
+        end
+
+        sum0 = sum0 +  (px-1) * counts(px);
+        m0 = sum0 / w0;
+        m1 = (sum1 - sum0) / w1;
+        intervar = w0 * w1 * (m0 - m1)^2;
+        if ( intervar > maximum )
+            maximum = intervar;
+            level = px;
+        end
+    end
+    
+    binary_image = source_image > level;
+
+end
+
+% Q5) 
+
+function [labeledImage, numComponents] = connectedComponentAnalysisBFS(binaryImage)
+    % Ensure the input image is binary.
+    binaryImage = binaryImage > 0;
+    
+    % Initialize the labeled image and component count.
+    labeledImage = zeros(size(binaryImage));
+    numComponents = 0;
+    
+    % Get the dimensions of the image.
+    [rows, cols] = size(binaryImage);
+    
+    % Directions for 4-connectivity: up, down, left, right.
+    directions = [-1, 0; 1, 0; 0, -1; 0, 1];
+    
+    % Function for the breadth-first search.
+    function bfs(startRow, startCol, label)
+        % Initialize a queue with the starting pixel.
+        queue = [startRow, startCol];
+        
+        while ~isempty(queue)
+            % Pop the first element from the queue.
+            pixel = queue(1, :);
+            queue(1, :) = [];
+            
+            for i = 1:4
+                newRow = pixel(1) + directions(i, 1);
+                newCol = pixel(2) + directions(i, 2);
+                
+                % Check bounds and if the pixel is part of the component and not yet labeled.
+                if newRow > 0 && newRow <= rows && newCol > 0 && newCol <= cols ...
+                        && binaryImage(newRow, newCol) == 1 && labeledImage(newRow, newCol) == 0
+                    labeledImage(newRow, newCol) = label;
+                    queue(end+1, :) = [newRow, newCol]; % Enqueue
+                end
+            end
+        end
+    end
+
+    % Iterate through each pixel in the image.
+    for r = 1:rows
+        for c = 1:cols
+            % If the pixel is a foreground pixel and not yet labeled, perform BFS.
+            if binaryImage(r, c) == 1 && labeledImage(r, c) == 0
+                numComponents = numComponents + 1; % Found a new component.
+                labeledImage(r, c) = numComponents;
+                bfs(r, c, numComponents);
+            end
+        end
+    end
+end
+
+
+
+
+##### SOURCE END #####
+--></body></html>
